@@ -1,0 +1,12 @@
+{% extends "applications/base.html" %}
+{% block title %}Add Resume{% endblock %}
+{% block content %}
+<h1>Add a Resume</h1>
+<p>Paste the full text content of a resume version.</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'resume_list' %}">Back</a>
+{% endblock %}

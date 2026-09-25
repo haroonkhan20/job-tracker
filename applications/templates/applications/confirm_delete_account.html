@@ -1,0 +1,13 @@
+{% extends "applications/base.html" %}
+{% block title %}Delete Account{% endblock %}
+{% block content %}
+<div class="card" style="max-width:500px;">
+    <h2>Delete your account?</h2>
+    <p style="margin:16px 0;">This permanently deletes your account and every application/resume you've saved. This can't be undone.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, delete everything</button>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

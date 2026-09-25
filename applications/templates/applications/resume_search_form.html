@@ -1,0 +1,12 @@
+{% extends "applications/base.html" %}
+{% block title %}Add Resume{% endblock %}
+{% block content %}
+<h1>Paste a Resume to Find Matching Jobs</h1>
+<form method="post">
+    {% csrf_token %}
+    <textarea name="resume_text" rows="14" style="width:100%; max-width:700px;" required placeholder="Paste resume content here..."></textarea>
+    <br><br>
+    <button type="submit">Find Jobs</button>
+</form>
+<a href="{% url 'home' %}">Back</a>
+{% endblock %}

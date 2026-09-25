@@ -1,0 +1,20 @@
+{% extends "applications/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h1>{{ title }}</h1>
+{% if match_pct is not None %}
+<div class="gauge-wrap">
+    <div class="gauge" style="background: conic-gradient(from 270deg, #dc2626 0deg, #f97316 60deg, #eab308 108deg, #16a34a 162deg, #16a34a 180deg, transparent 180deg);">
+        <div class="gauge-needle" style="transform: rotate({{ needle_rotation }}deg);"></div>
+        <div class="gauge-center"></div>
+    </div>
+    <div class="gauge-label" style="color: {{ match_color }};">{{ match_pct }}% match</div>
+</div>
+{% endif %}
+<form method="post" action="{% if form_pk %}{% url form_action form_pk %}{% else %}{% url form_action %}{% endif %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'application_list' %}">Back to list</a>
+{% endblock %}

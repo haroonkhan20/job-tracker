@@ -1,0 +1,18 @@
+{% extends "applications/base.html" %}
+{% block title %}My Resumes{% endblock %}
+{% block content %}
+<h1>My Resumes</h1>
+<a href="{% url 'resume_create' %}">+ Add Resume</a>
+<table>
+    <tr><th>Name</th><th>Preview</th><th>Actions</th></tr>
+    {% for r in resumes %}
+    <tr>
+        <td>{{ r.name }}</td>
+        <td>{{ r.content|truncatechars:80 }}</td>
+        <td><a href="{% url 'resume_delete' r.pk %}">Delete</a></td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">No resumes yet — add your first one.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

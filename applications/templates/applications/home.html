@@ -1,0 +1,19 @@
+{% extends "applications/base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="hero">
+    <h1>Track your job search, powered by AI</h1>
+    <p>Paste a job description to get matched against your resumes, or paste a resume to find matching jobs.</p>
+    <div class="big-btn-row">
+        <a href="{% url 'ai_prefill' %}" class="big-btn">📝 Add a JD</a>
+        <a href="{% url 'resume_job_search' %}" class="big-btn">🔍 Add a Resume</a>
+    </div>
+</div>
+<div class="profile-card">
+    <h3>👤 {{ user.username }}</h3>
+    <p>{{ user.email|default:"No email set" }}</p>
+    <p style="margin-top:12px;"><a href="{% url 'application_list' %}">View all applications →</a></p>
+    <p style="margin-top:6px;"><a href="{% url 'resume_list' %}">Manage saved resumes →</a></p>
+    <p style="margin-top:16px;"><a href="{% url 'delete_account' %}" class="danger-link">Delete my account</a></p>
+</div>
+{% endblock %}

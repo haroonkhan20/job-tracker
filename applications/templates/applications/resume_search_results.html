@@ -1,0 +1,21 @@
+{% extends "applications/base.html" %}
+{% block title %}Job Search Results{% endblock %}
+{% block content %}
+<h1>Matched Job Titles & Search Links</h1>
+
+<div class="card">
+    <h2>Suggested titles</h2>
+    <p>{{ profile.job_titles|join:", " }}</p>
+    <h2 style="margin-top:16px;">Top skills detected</h2>
+    <p>{{ profile.top_skills|join:", " }}</p>
+</div>
+
+<div class="card">
+    <h2>Search on:</h2>
+    {% for platform, url in links.items %}
+        <p><a href="{{ url }}" target="_blank">{{ platform }} →</a></p>
+    {% endfor %}
+</div>
+
+<a href="{% url 'home' %}">Back to home</a>
+{% endblock %}

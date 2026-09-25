@@ -1,0 +1,12 @@
+{% extends "applications/base.html" %}
+{% block title %}AI Prefill{% endblock %}
+{% block content %}
+<h1>Paste a Job Description</h1>
+<form method="post">
+    {% csrf_token %}
+    <textarea name="job_description" rows="12" style="width:100%; max-width:700px;" required></textarea>
+    <br><br>
+    <button type="submit">Extract with AI</button>
+</form>
+<a href="{% url 'application_list' %}">Back to list</a>
+{% endblock %}

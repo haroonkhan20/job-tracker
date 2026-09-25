@@ -1,0 +1,60 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: job_tracker
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppassword123
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d job_tracker"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: db
+      DB_NAME: job_tracker
+      DB_USER: appuser
+      DB_PASSWORD: apppassword123
+      DB_PORT: "5432"
+      REDIS_URL: redis://redis:6379/0
+      GROQ_API_KEY: ${GROQ_API_KEY}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  worker:
+    build: .
+    command: celery -A jobtracker worker --loglevel=info --pool=solo
+    volumes:
+      - .:/code
+    environment:
+      DB_HOST: db
+      DB_NAME: job_tracker
+      DB_USER: appuser
+      DB_PASSWORD: apppassword123
+      DB_PORT: "5432"
+      REDIS_URL: redis://redis:6379/0
+      GROQ_API_KEY: ${GROQ_API_KEY}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+volumes:
+  pgdata:
